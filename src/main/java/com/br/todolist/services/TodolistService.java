@@ -27,7 +27,7 @@ public class TodolistService {
     }
 
 
-    public Optional<TodolistEntity> findId(UUID id) {
+    public Optional<TodolistEntity> findById(UUID id) {
         return todolistRepository.findById(id);
     }
 }

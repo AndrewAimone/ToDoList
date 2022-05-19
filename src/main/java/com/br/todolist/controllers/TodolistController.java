@@ -44,10 +44,23 @@ public class TodolistController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getOneTodolist(@PathVariable(value = "id")UUID id){
-        Optional<TodolistEntity> todolistEntity = todolistService.findId(id);
-        return ResponseEntity.status(HttpStatus.OK).body(todolistEntity.get());
+        Optional<TodolistEntity> todolistEntityOptional = todolistService.findById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(todolistEntityOptional.get());
     }
 
 
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateTodolist(@PathVariable(value = "id")UUID id, @RequestBody @Valid TodolistDTO todolistDTO){
+
+        Optional<TodolistEntity> todolistEntityOptional = todolistService.findById(id);
+
+        var todolistEntity = new TodolistEntity();
+        BeanUtils.copyProperties(todolistDTO, todolistEntity);
+        todolistEntity.setId(todolistEntityOptional.get().getId());
+        todolistEntity.setCreatedAt(todolistEntityOptional.get().getCreatedAt());
+
+        return ResponseEntity.status(HttpStatus.OK).body(todolistService.save(todolistEntity));
+    }
 
 }
