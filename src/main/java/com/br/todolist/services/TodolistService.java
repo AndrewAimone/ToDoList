@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class TodolistService {
@@ -25,4 +27,7 @@ public class TodolistService {
     }
 
 
+    public Optional<TodolistEntity> findId(UUID id) {
+        return todolistRepository.findById(id);
+    }
 }

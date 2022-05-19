@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -38,6 +40,12 @@ public class TodolistController {
     @GetMapping
     public ResponseEntity<Page<TodolistEntity>> getAllTodolist(@PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.ASC)Pageable pageable){
         return ResponseEntity.status(HttpStatus.OK).body(todolistService.findAll(pageable));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getOneTodolist(@PathVariable(value = "id")UUID id){
+        Optional<TodolistEntity> todolistEntity = todolistService.findId(id);
+        return ResponseEntity.status(HttpStatus.OK).body(todolistEntity.get());
     }
 
 
