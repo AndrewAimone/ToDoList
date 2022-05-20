@@ -30,4 +30,8 @@ public class TodolistService {
     public Optional<TodolistEntity> findById(UUID id) {
         return todolistRepository.findById(id);
     }
+
+    public void delete(TodolistEntity todolistEntity) {
+        todolistRepository.delete(todolistEntity);
+    }
 }

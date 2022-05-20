@@ -48,7 +48,12 @@ public class TodolistController {
         return ResponseEntity.status(HttpStatus.OK).body(todolistEntityOptional.get());
     }
 
-
+    @DeleteMapping("{id}")
+    public ResponseEntity<Object> deleteTodolist(@PathVariable(value="id") UUID id){
+        Optional<TodolistEntity> todolistEntityOptional = todolistService.findById(id);
+        todolistService.delete(todolistEntityOptional.get());
+        return ResponseEntity.status(HttpStatus.OK).body("Todolist Deleted Sucessfully!");
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateTodolist(@PathVariable(value = "id")UUID id, @RequestBody @Valid TodolistDTO todolistDTO){
